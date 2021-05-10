@@ -1,20 +1,36 @@
 import React, {useState, useReducer} from 'react'
 import {Container} from './AppStyle'
+import Todo from './Todo'
+
 function App() {
- 
+  
   const reducer=(state, action)=>{
     switch(action.type){
-      case "decrement": return state-1;
-      case "increment": return state+1;
-      default: return  state
+      case 'add': return [...state, {id: Date.now(), name:action.payload.name, completed: false}];
+      default: return state;
     }
   }
-  const [count, dispatch] = useReducer(reducer, 0);
+  
+  
+  const [name, setName] = useState("");
+  const [todos, dispatch] = useReducer(reducer, []);
+  const handleSubmit=()=>{
+    dispatch({type:"add", payload:{name:name}})
+    setName('');
+  }
   return (
     <Container>
-      <button onClick={()=>dispatch({type: "decrement"})}>-</button>
-      <h2>{count}</h2>  
-      <button onClick={()=>dispatch({type: "increment"})}>+</button>
+      <input type="text" onChange={(e)=>setName(e.target.value)} />
+      <button onClick={handleSubmit}>Submit</button>
+      {todos.map((value, index)=>{
+        return(
+          <div>
+            <Todo value={value} />
+
+          </div>
+            ) 
+      })}
+
     </Container>
   );
 }
