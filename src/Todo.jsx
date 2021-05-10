@@ -11,7 +11,11 @@ const Todo = ({ value, dispatch }) => {
       >
         Toggle
       </button>
-      <button>delete</button>
+      <button
+        onClick={() => dispatch({ type: "delete", payload: { id: value.id } })}
+      >
+        delete
+      </button>
     </Container>
   );
 };

@@ -12,7 +12,9 @@ function App() {
           return {...todo, completed:!todo.completed}
         }
         return todo
-      })
+      });
+      case "delete":
+        return state.filter((todo)=>todo.id !== action.payload.id);
       default: return state;
     }
   }
